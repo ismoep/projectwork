@@ -1,0 +1,234 @@
+
+/******************************************************************************
+ * 
+ * DESCRIPTION:
+ * ' YouAreHere ' java script shows your current loaction and shows ten nearest
+ *   places according to the search. 
+ *   
+ * REQUIRES:
+ *   YouAreHere.html
+ *   YouAreHere-js
+ *	 TermsOfUseAndPrivacyPolicy.html
+ *	 TermsOfUseAndPrivacyPolicy.css
+ *   
+ *  LIBRARIES:
+ *   "http://maps.googleapis.com/maps/api/js?libraries=places"
+ *   "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
+ *   
+ *   REVISION INFORMATION:
+ *   	Revision: 	ver 1.0 
+ *   	Date:    	2014-11-09
+ *   	Author:   	Ismo Paukamainen
+ *   
+ *******************************************************************************/
+
+
+
+html { padding: 0; margin: 0; }
+
+
+ body {
+	font-size: 100%; /* Parent font size 100% equals to 16 pixels in most of the browsers. em's are used for fonts for other the screen widths.*/	
+	color:black;
+    line-height: 1.6875;
+    font-family:Arial,Verdana;
+	padding: 0; 
+	margin: 0;
+	
+}                           
+             
+
+/*--------------------------------------------------------------------------------------------------------
+      Page Layout. em's are used for relative values that will scale when the page width is changed.
+---------------------------------------------------------------------------------------------------------*/
+	
+#page {
+	width: 1080px;
+	height:auto;
+	
+}
+
+
+#map_canvas {
+	width: 95%;
+	height:31.25em;
+	float: left;
+	padding: 0.3125em 0.9375em; /* 5px/16px & 15px/16px */	
+}
+#google {
+	width:95%;
+	clear: both;
+	padding: 0 0.9375em; /* 0 & 15px/16px */
+	border-top: 0.2em solid #ccc;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	margin:0.5em;
+	font-style:italic;
+	font-size:0.5em;
+	text-align:left;
+	background-color:#ffffff;
+}
+
+/* Table for Menu */
+#search {
+	width: 99%;
+	height:auto;
+	padding: 0.3125em 0.9375em; /* 5px/16px & 15px/16px */	
+	float:left;
+	background-color:#36465d;
+}
+/* Cells of Menu */
+#cell1, #cell2, #cell3, #cell4, #cell5  {
+	width:	13.5em;		/* 1080/5px = 216px, 216px/16px = 13,5em */
+	height: 2.5em;		/* 16px = 100%, 2.5em = 40px */
+	border: 0.2em solid #ccc;
+	text-align:center;
+	background-color:#ddedf4;
+	color:black;
+}
+
+/* Table for result list */
+#results {
+	width: 95%;
+	height:auto;
+	padding: 0.3125em 0.9375em; /* 5px/16px & 15px/16px */	
+	float:left;
+	overflow: scroll;
+	border: 0.2em solid #ccc;
+	margin-left: 1em;
+	background-color:#ffffff;
+}
+
+a{
+	font-family:"Arial", Times, serif; 
+	color:blue;
+}
+/* BIG Screen,    1200px or less */
+/*=======================================================================================================*/
+
+@media screen and (max-width: 1800px) {
+	
+	#page {
+		width: 100%;
+		height:auto;
+	}
+	
+	
+	body {
+		font-size: 120%;
+		color:black;
+	}
+	#buttons {
+	height: auto;
+	float:left;
+	}
+	
+}
+/* BIG Screen,    900px or less */
+/*=======================================================================================================*/
+
+@media screen and (max-width: 900px) {
+	
+	#page {
+		width: 110%;
+		height:auto;
+	}
+	
+	
+	body {
+		font-size: 75%;
+		color:black;
+	}
+	
+	
+}
+/* Medium screen 768px or less */
+/*=======================================================================================================*/
+
+@media screen and (max-width: 768px) {
+	#page {
+		width: 100%;
+		height:auto;
+	}
+	
+	
+	body {
+		font-size: 64%;
+		color:black;
+	}
+	
+	
+}
+
+
+/* Medium screen 600px or less */
+/*=======================================================================================================*/
+
+@media screen and (max-width: 600px) {
+	#page {
+		width:100%;
+		height:auto;
+	}
+	
+	body {
+		font-size: 50%;
+		color:black;
+	}
+	
+	
+
+
+}
+
+/* Small screen  480px or less. Do not srink fonts any more they come too small.n Just set the page width for the device*/
+/*======================================================================================================================*/
+
+@media screen and (max-width: 480px) {
+
+	#page {
+		width: 100%;
+		height:auto;
+	}
+	
+	body {
+		font-size: 50%;
+		color:black;
+	}
+	
+}
+	
+	
+	
+	
+/* Very Small screen  320px or less . Do not srink fonts any more they come too small.n Just set the page width for the device */
+/*=============================================================================================================================*/
+
+@media screen and (max-width: 320px) {
+
+	#page {
+		width: 100%;
+		height:auto;
+	}
+	body {
+		font-size: 50%;
+		color:black;
+	}
+}
+
+/*-----------------------------------------------------------------------------------------
+ 						Colors
+ -----------------------------------------------------------------------------------------*/
+
+html {
+	background:#36465d;
+}
+
+#page{
+	
+	background: #ffffff;
+}
+
+
+
+
+  

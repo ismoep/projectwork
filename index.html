@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--
+/******************************************************************************
+ * 
+ * DESCRIPTION:
+ * ' YouAreHere ' java script shows your current loaction and shows ten nearest
+ *   places according to the search. 
+ *   
+ * REQUIRES:
+ *   YouAreHere.js
+ *   YouAreHere.css
+ *	 TermsOfUseAndPrivacyPolicy.html
+ *	 TermsOfUseAndPrivacyPolicy.css
+ *   
+ *  LIBRARIES:
+ *   "http://maps.googleapis.com/maps/api/js?libraries=places"
+ *   "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
+ *   
+ *   REVISION INFORMATION:
+ *   	Revision: 	ver 1.0 
+ *   	Date:    	2014-11-09
+ *   	Author:   	Ismo Paukamainen
+ *   
+ *******************************************************************************/
+-->
+
+
+
+
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=yes">
+
+  <link rel="stylesheet" type="text/css" href="YouAreHere.css">
+
+
+<title>You Are Here</title>
+
+<!-- Google Maps and Places API -->
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+    <!-- AJAX, jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+	<!-- You are here script -->
+	<script src="YouAreHere.js"></script>
+	
+</head>
+ 
+ 
+<body onload="initialize();">
+
+<div id="page">
+	<div id="menu">
+		<table id="search">
+			<tr>
+				<td id="cell1" onclick="search(0)">Restaurant</td>
+				<td id="cell2" onclick="search(1)">Bar</td>
+				<td id="cell3" onclick="search(2)">Cafe</td>
+				<td id="cell4" onclick="search(3)">Gas Station</td>
+				<td id="cell5" onclick="search(4)">Pharmacy</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="map_canvas">
+		<!-- map div container -->
+	</div>
+	
+	<div id="google">
+		<!--  Mandatory picture when google maps API's used  -->
+		<img src="images/powered-by-google-on-white.png"></img><a href="TermsOfUseAndPrivacyPolicy.html"> Terms of Use and Privacy Policy Requirements</a>
+		<button onclick="clearSearch(99)">Clear</button>
+
+	</div>
+	
+	
+	
+	
+	<div id="result_table">
+ 	 <!--   A table for query results -->
+		<table id="results">
+		<tr></tr>
+		</table>
+	
+	</div>
+	
+</div> <!-- End of Page -->
+</body>
+</html>
+
+
+
+
