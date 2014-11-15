@@ -13,8 +13,6 @@ YouAreHere
 <author href="http://users.metropolia.fi/~ismop” email=ismo.paukamainen@metropolia.fi">
 Ismo
 </author>
-<preference name="android-minSdkVersion" value="10" /> 
-<preference name="splash-screen-duration" value="10000"/> 
 
 <gap:platform name="android" />
 <gap:plugin name="org.apache.cordova.geolocation" />
