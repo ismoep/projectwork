@@ -6,12 +6,18 @@ xmlns:gap = "http://phonegap.com/ns/1.0"
 id = "fi.metropolia.ismo"
 versionCode="2"
 version = "2.0.0">
-<name>lab1</name>
+<name>Project Work</name>
 <description>
-my first app
+YouAreHere
 </description>
-<author href="http://users.metropolia.fi/~ismop” email=�ismo.paukamainen@metropolia.fi">
+<author href="http://users.metropolia.fi/~ismop” email=ismo.paukamainen@metropolia.fi">
 Ismo
 </author>
+
+
+<gap:platform name="android" />
+<gap:plugin name="org.apache.cordova.geolocation" />
+<gap:plugin name="org.apache.cordova.vibration" />
+
 <icon src="icon.png" />
 </widget>
