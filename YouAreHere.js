@@ -138,6 +138,8 @@ $(document).ready(function()
 // Fetching the current location from the service is ok. Not e.g. DENIED because of the browser settings.
 function success(position)
 {
+	
+	alert(position.coords.accuracy);
 	//Location found, clear the 'serach satellite' text
 	if (document.getElementById("results").rows.length>0){	
 		clearTable();		
