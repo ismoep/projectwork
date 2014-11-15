@@ -6,8 +6,8 @@
  *   places according to the search. 
  *   
  * REQUIRES:
- *   YouAreHere.html
- *   YouAreHere-js
+ *   index.html
+ *   YouAreHere.js
  *	 TermsOfUseAndPrivacyPolicy.html
  *	 TermsOfUseAndPrivacyPolicy.css
  *   
@@ -17,7 +17,7 @@
  *   
  *   REVISION INFORMATION:
  *   	Revision: 	ver 1.0 
- *   	Date:    	2014-11-09
+ *   	Date:    	2014-11-16
  *   	Author:   	Ismo Paukamainen
  *   
  *******************************************************************************/
@@ -50,7 +50,7 @@ html { padding: 0; margin: 0; }
 
 
 #map_canvas {
-	width: 95%;
+	width: 99%;
 	height:31.25em;
 	float: left;
 	padding: 0.3125em 0.9375em; /* 5px/16px & 15px/16px */	
@@ -89,7 +89,7 @@ html { padding: 0; margin: 0; }
 
 /* Table for result list */
 #results {
-	width: 95%;
+	width: 96%;
 	height:auto;
 	padding: 0.3125em 0.9375em; /* 5px/16px & 15px/16px */	
 	float:left;
@@ -103,7 +103,7 @@ a{
 	font-family:"Arial", Times, serif; 
 	color:blue;
 }
-/* BIG Screen,    1200px or less */
+/* BIG Screen,    1800px or less */
 /*=======================================================================================================*/
 
 @media screen and (max-width: 1800px) {
@@ -130,7 +130,7 @@ a{
 @media screen and (max-width: 900px) {
 	
 	#page {
-		width: 110%;
+		width: 100%;
 		height:auto;
 	}
 	

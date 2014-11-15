@@ -5,8 +5,10 @@
  *   places according to the search. 
  *   
  * REQUIRES:
- *   YouAreHere.html
+ *   index.html
  *   YouAreHere.css
+ *   TermsOfUseAndPrivacyPolicy.html
+ *	 TermsOfUseAndPrivacyPolicy.css
  *   
  *  LIBRARIES:
  *   "http://maps.googleapis.com/maps/api/js?libraries=places"
@@ -14,7 +16,7 @@
  *   
  *   REVISION INFORMATION:
  *   	Revision: 	ver 1.0 
- *   	Date:    	2014-11-09
+ *   	Date:    	2014-11-16
  *   	Author:   	Ismo Paukamainen
  *   
  *******************************************************************************/
@@ -28,13 +30,12 @@
  var position;
  var types;
  var n;
- var index;
  var dataCollected;
  
  
- //--Timeout for getCurrentPosion
+ //--Timeout in millisecondesfor getCurrentPosion, uses GPS by default, set by enableHighAccuracy: true 
  var geoOptions = {
-	     timeout: 10 * 1000
+	     timeout: 60 * 1000, enableHighAccuracy: true 
 	  };
  
  // An array for google maps markers
@@ -114,6 +115,15 @@ $(document).ready(function()
 {	 
 	    if( navigator.geolocation )
 	    {
+	    	// GPS prioritized. It might take some time to serch satellite, or if GPS not available then use cell data.
+	    	 var table = document.getElementById("results");
+	 	    // row(-1) adds a row in the last position of the table
+	 	    var row = table.insertRow(-1);
+	 	    	var cell0 = row.insertCell(0);
+	 	    	var cell1 = row.insertCell(1);
+	 	    	
+	 	       cell1.innerHTML = "Searching for your location....... ";
+	    	
 	      // http://www.w3.org/TR/2012/PR-geolocation-API-20120510/
 	      // Call getCurrentPosition with success and failure callbacks with timeout
 	     // In a case of ERROR the function positionError is called.
@@ -130,7 +140,13 @@ $(document).ready(function()
 // Fetching the current location from the service is ok. Not e.g. DENIED because of the browser settings.
 function success(position)
 {
-	 currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	//Location found, clear the 'serach satellite' text
+	if (document.getElementById("results").rows.length>0){	
+		clearTable();		
+	} 
+	
+	
+	currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 	
 	var mapOptions={
 					zoom:12,
@@ -160,16 +176,77 @@ function success(position)
       
 }
 
+function setMenu(n){
+	 // Mark the 'button' which was pressed with grey background color, set the rest as they originally were
+	 switch (n) {
+	    case 0:
+	    	document.getElementById("cell1").style.backgroundColor = "grey";
+	    	document.getElementById("cell2").style.backgroundColor = '#ddedf4';
+	    	document.getElementById("cell3").style.backgroundColor = '#ddedf4';
+	    	document.getElementById("cell4").style.backgroundColor = '#ddedf4';
+	    	document.getElementById("cell5").style.backgroundColor = '#ddedf4';
+	        break;
+	        
+	    case 1:
+	    	document.getElementById("cell1").style.backgroundColor = '#ddedf4';
+	    	document.getElementById("cell2").style.backgroundColor = "grey";
+	    	document.getElementById("cell3").style.backgroundColor = '#ddedf4';
+	    	document.getElementById("cell4").style.backgroundColor = '#ddedf4';
+	    	document.getElementById("cell5").style.backgroundColor = '#ddedf4';
+	        break;
+	        
+	    case 2:
+	    	
+	    	document.getElementById("cell1").style.backgroundColor = '#ddedf4';
+	    	document.getElementById("cell2").style.backgroundColor = '#ddedf4';
+	    	document.getElementById("cell3").style.backgroundColor = "grey";
+	    	document.getElementById("cell4").style.backgroundColor = '#ddedf4';
+	    	document.getElementById("cell5").style.backgroundColor = '#ddedf4';
+	        break;
+	        
+	    case 3:
+	    	
+	    	document.getElementById("cell1").style.backgroundColor = '#ddedf4';
+	    	document.getElementById("cell2").style.backgroundColor = '#ddedf4';
+	    	document.getElementById("cell3").style.backgroundColor = '#ddedf4';
+	    	document.getElementById("cell4").style.backgroundColor = "grey";
+	    	document.getElementById("cell5").style.backgroundColor = '#ddedf4';
+	        break;
+	        
+	    case 4:
+	    	
+	    	document.getElementById("cell1").style.backgroundColor = '#ddedf4';
+	    	document.getElementById("cell2").style.backgroundColor = '#ddedf4';
+	    	document.getElementById("cell3").style.backgroundColor = '#ddedf4';
+	    	document.getElementById("cell4").style.backgroundColor = '#ddedf4';
+	    	document.getElementById("cell5").style.backgroundColor = "grey";
+	        break;
+	        
+	    default:
+	    	// Sets back the original background color in menu
+	    	document.getElementById("cell1").style.backgroundColor = '#ddedf4';
+			document.getElementById("cell2").style.backgroundColor = '#ddedf4';
+			document.getElementById("cell3").style.backgroundColor = '#ddedf4';
+			document.getElementById("cell4").style.backgroundColor = '#ddedf4';
+			document.getElementById("cell5").style.backgroundColor = '#ddedf4';
+			
+	    	break;
+	}
+	
+	
+}
 
 
 //----------------------- Menu clicked ---------------------------- 
 
 function search(n)
 {
+	// Mark the 'button' which was pressed with grey background color, set the rest as they originally were
+	setMenu(n);
+	 
 	//--- Delete rows in the results -table
 	// Deletes all markers in the array by removing references to them
 	clearSearch(n);
-	
 	
 	//search for what is defined in 'search_type' string nearby your current location. 
 	placesRequest(search_title[n],currentPosition,[search_type[n]]);
@@ -179,6 +256,7 @@ function search(n)
 //Adds the search title in the 'result' -table.
 function insertHeader(n){
 	    var table = document.getElementById("results");
+	    
 	    // row(-1) adds a row in the last position of the table
 	    var row = table.insertRow(-1);
 	    	var cell0 = row.insertCell(0);
@@ -195,7 +273,6 @@ function insertHeader(n){
 		    	cell2.innerHTML = "Address";
 	    	 };
 	    	
-	    	cell1.innerHTML.bgColor = "grey";
 }
 
 
@@ -208,7 +285,6 @@ function insertHeader(n){
 //Request places from Google
 function placesRequest(title,latlng,types)
 {	
-	
 	
 	//Parameters for our places request
 	// Sort by distance.
@@ -235,6 +311,7 @@ function placesRequest(title,latlng,types)
 		
 		$.each(results, function(item,place){	
 			 // Ten closest places are marked. i.e. item goes from 0 to 9
+			
 			if (item < 10 ){
 				
 			    var thisplace = new google.maps.Marker({
@@ -245,25 +322,28 @@ function placesRequest(title,latlng,types)
 				 });
 			    //Add the marker in the array, so that it can be removed later when needed.
 			    markersArray.push(thisplace);
-			   index=item;
-			    
+			   
 			   //Store data for later use
-			   placeList[index] = item;
-		  	    placeName[index] = place.name;
-		  	    placeVicinity[index]= place.vicinity;
-		    
+			   placeList[item] = item;
+		  	   placeName[item] = place.name;
+		  	   placeVicinity[item]= place.vicinity;
+	  	       placeId[item]= place.place_id;
+			  
 			    // Web address needs to be added. detailRequest is used for that
-			     detailsRequest(index, place.place_id);
-			    	
+			   detailsRequest(item, place.place_id);
+			
 			}
 			else{
 				// exits 'each' -loop when the amount of itemns is 10
 				return false;
-			}	
+			}
 			
 		})
 		
+		
 	});	
+	
+	
 	
 }
 
@@ -273,7 +353,7 @@ function placesRequest(title,latlng,types)
 //Request details from Google
 function detailsRequest(index, placeid)
 {	
-	  
+	
 	// Get also detals of the place. This is needed e.g. for website information 
 	
 	//Make the service call to google
@@ -286,18 +366,32 @@ function detailsRequest(index, placeid)
     			placeId:placeid
         };
     	
+    	//Fail counter
+    	var i=0;
+    	
          service.getDetails(requestDetails, function(details,status){	
         	 if (status=="OK"){
-        		 
+      	     
         		// Insert all the collected data to the table
-                 insertData(index, details.website);
-        		 
-        		 
+                insertData(index, details.website);
+  
         	 }
-        		
+        	
+        	 else{
+        		 // Re- try max 5 times, if getDetails failed
+        		 i++;
+        		 if (i<6)
+        		    {
+        			     detailsRequest(index, placeid);
+        		     }
+        			 else {
+        				 return false;
+                     }
+        
+        	 }
             
         });
-         
+       
          
   
 }
@@ -314,16 +408,22 @@ function clearSearch(n){
 	insertHeader(n);
 	
 	//Clear the data stores
-  	
-  	for (i=0;i<10;i++){
-  		placeList[i] = 0;
-  	    placeName[i] = "";
-  	    placeVicinity[i]= "";
-  	    placeWebsite[i]="";
+  	while(placeList.length>0){
+  		
+  		placeList.pop();
+  		placeName.pop();
+  		placeVicinity.pop();
+  		placeWebsite.pop();
+  		placeId.pop();
   	}
+	
 
 	// Deletes all markers in the array by removing references to them
 	deleteOverlays();
+	
+	if(n==99){
+		setMenu(n);
+	};
 	
 	
 }
@@ -364,18 +464,18 @@ function deleteOverlays() {
 
 // This function orders items based on the index. Thst is, in the order of the distance
 // the nearest first etc.and Adds them then the in thethe 'result' -table.
-function insertData(index,website){
-	  var link;
-	  var table = document.getElementById("results");
+function insertData(ind,website){
+	     var link;
+	     var table = document.getElementById("results");
 	  
-	  // One more item.
-	  dataCollected++;
-	  
+	     // One more item collected.
+		 dataCollected++;
+		
 		 // Store website, the rest is already stored.
-		  placeWebsite[index]=website;
+		 placeWebsite[ind]=website;
 	
-		// Data for all 10 rows is now collected
-       if (dataCollected==9){
+		// Data colleted for all places 
+       if (dataCollected==placeList.length){
        
 		  // Put data in the table in order based on the index.
 		  for (i=0;i<placeList.length;i++){
@@ -384,6 +484,7 @@ function insertData(index,website){
 	    	var cell0 = row.insertCell(0);
 	    	var cell1 = row.insertCell(1);
 	    	var cell2 = row.insertCell(2);
+	    	
 
 	     	cell0.innerHTML = placeList[i]+1; // index
 	    	if (placeWebsite[i]!=undefined){	
@@ -391,19 +492,22 @@ function insertData(index,website){
 				
 			}
 			else{
+				// no web site available, put only place name on th elist
 				link = placeName[i];
 			};
 			cell1.innerHTML = link;
-	     
-	
 	        cell2.innerHTML = placeVicinity[i];
-		  };
+		  }
 	    
 	  	
 	      
 	      
-		};
+		}
     
+		
+      
+		
+		
 }
 //----------------End Data Inserting section -------------------------------------------------
 
