@@ -382,7 +382,7 @@ function detailsRequest(index, placeid)
         		 i++;
         		 if (i<6)
         		  {
-        			 alert("NOK";)
+      
         			   detailsRequest(index, placeid);
         		   }
         		else {
@@ -474,7 +474,7 @@ function insertData(ind,website){
 		
 		 // Store website, the rest is already stored.
 		 placeWebsite[ind]=website;
-		 alert("Data :"+dataCollected + "list :"+placeList.length );
+		 
 		// Data colleted for all places 
        if (dataCollected==placeList.length){
        
