@@ -34,7 +34,7 @@
  
  
  //--Timeout in millisecondesfor getCurrentPosion, uses GPS by default, set by enableHighAccuracy: true 
- var geoOptions = {maximumAge: 3000, timeout: 6000, enableHighAccuracy: true };
+ var geoOptions = {maximumAge: 3000, timeout: 60000, enableHighAccuracy: true };
  
  // An array for google maps markers
  var markersArray = [];
