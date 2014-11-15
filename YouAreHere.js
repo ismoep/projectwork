@@ -500,11 +500,14 @@ function insertData(ind,website){
 		  }
 	    
 	  	
+		  // Vibrate couple of times when ready
+			navigator.vibrate([50,10,50]);
+
 	      
 	      
 		}
     
-		
+
       
 		
 		
