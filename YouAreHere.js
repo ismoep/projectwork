@@ -140,7 +140,7 @@ $(document).ready(function()
 function success(position)
 {
 	
-	if (alert(position.coords.accuracy)>100) {
+	if (position.coords.accuracy>100) {
 		tryBetterAccuracy++;
 		if (tryBetterAccuracy<5){
 			initialize();
