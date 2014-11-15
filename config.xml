@@ -6,9 +6,9 @@ xmlns:gap = "http://phonegap.com/ns/1.0"
 id = "fi.metropolia.ismo"
 versionCode="2"
 version = "2.0.0">
-<name>Project Work at School</name>
+<name>YouAreHere</name>
 <description>
-YouAreHere
+Project Work at School
 </description>
 <author href="http://users.metropolia.fi/~ismop” email=ismo.paukamainen@metropolia.fi">
 Ismo
