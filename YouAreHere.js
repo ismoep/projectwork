@@ -126,7 +126,8 @@ $(document).ready(function()
 	      // http://www.w3.org/TR/2012/PR-geolocation-API-20120510/
 	      // Call getCurrentPosition with success and failure callbacks with timeout
 	     // In a case of ERROR the function positionError is called.
-	         navigator.geolocation.getCurrentPosition( success, positionError, geoOptions);
+	       //  navigator.geolocation.getCurrentPosition( success, positionError, geoOptions);
+	         navigator.geolocation.watchPosition( success, positionError, geoOptions);
 		}
 		else
 		{
@@ -139,19 +140,6 @@ $(document).ready(function()
 // Fetching the current location from the service is ok. Not e.g. DENIED because of the browser settings.
 function success(position)
 {
-	
-	if (position.coords.accuracy>100) {
-		tryBetterAccuracy++;
-		if (tryBetterAccuracy<5){
-			initialize();
-		}
-		
-	}
-	//Location found, clear the 'serach satellite' text
-	if (document.getElementById("results").rows.length>0){	
-		clearTable();		
-	} 
-	
 	
 	currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 	
@@ -180,6 +168,11 @@ function success(position)
             /**  icon: YouAreHere,  default icon is used **/
               title: "Your are here!"
     });  
+    
+  //Location found, clear the 'serach satellite' text
+	if (document.getElementById("results").rows.length>0){	
+		clearTable();		
+	} 
       
 }
 
