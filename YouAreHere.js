@@ -381,12 +381,13 @@ function detailsRequest(index, placeid)
         		 // Re- try max 5 times, if getDetails failed
         		 i++;
         		 if (i<6)
-        		    {
-        			     detailsRequest(index, placeid);
-        		     }
-        			 else {
-        				 return false;
-                     }
+        		  {
+        			 alert("NOK";)
+        			   detailsRequest(index, placeid);
+        		   }
+        		else {
+        			return false;
+                }
         
         	 }
             
@@ -473,7 +474,7 @@ function insertData(ind,website){
 		
 		 // Store website, the rest is already stored.
 		 placeWebsite[ind]=website;
-	
+		 alert("Data :"+dataCollected + "list :"+placeList.length );
 		// Data colleted for all places 
        if (dataCollected==placeList.length){
        
@@ -501,7 +502,7 @@ function insertData(ind,website){
 	    
 	  	
 		  // Vibrate couple of times when ready
-		//navigator.vibrate([50,10,50]);
+		   navigator.vibrate([50,10,50]);
 
 	      
 	      
