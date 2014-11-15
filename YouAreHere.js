@@ -141,7 +141,6 @@ $(document).ready(function()
 // Fetching the current location from the service is ok. Not e.g. DENIED because of the browser settings.
 function success(position)
 {
-	
 	currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 	
 	var mapOptions={
@@ -155,7 +154,7 @@ function success(position)
 	// Create the map, and place it in the map_canvas div
     map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
     
-    // Location was found. Watch may be close.
+    // Location was found. Watch may be closed to save battery.
     navigator.geolocation.clearWatch(id);
     
     //This keeps your location in the center when the size of the page is changed.
@@ -244,12 +243,18 @@ function setMenu(n){
 
 function search(n)
 {
+	
 	// Mark the 'button' which was pressed with grey background color, set the rest as they originally were
 	setMenu(n);
 	 
+	
 	//--- Delete rows in the results -table
 	// Deletes all markers in the array by removing references to them
 	clearSearch(n);
+	
+	// Set info text what is happening
+	 var text = document.getElementById("info");
+	 text.innerHTML = "Searching for data....... ";
 	
 	//search for what is defined in 'search_type' string nearby your current location. 
 	placesRequest(search_title[n],currentPosition,[search_type[n]]);
@@ -274,6 +279,7 @@ function insertHeader(n){
 	    	else{
 	    		cell1.innerHTML = search_title[n];
 		    	cell2.innerHTML = "Address";
+		    	
 	    	 };
 	    	
 }
@@ -409,7 +415,14 @@ function clearSearch(n){
 	if (document.getElementById("results").rows.length>0){	
 		clearTable();		
 	}
+	// Clear  info text
+	var text = document.getElementById("info");
+	text.innerHTML="";
+	
+	
+	
 	insertHeader(n);
+	
 	
 	//Clear the data stores
   	while(placeList.length>0){
@@ -427,6 +440,12 @@ function clearSearch(n){
 	
 	if(n==99){
 		setMenu(n);
+		//----------------------------------------------------------------------------
+		// update the position
+		//----------------------------------------------------------------------------
+		id=navigator.geolocation.watchPosition(success, positionError, geoOptions); 
+		//-------------------------------------------------------------------------------
+		
 	};
 	
 	
@@ -481,6 +500,10 @@ function insertData(ind,website){
 		// Data colleted for all places 
        if (dataCollected==placeList.length){
        
+    	// Give info how many palkces were found
+    	var text = document.getElementById("info");
+    	text.innerHTML="Found "+placeList.length+" places.";
+    	   
 		  // Put data in the table in order based on the index.
 		  for (i=0;i<placeList.length;i++){
 	        // row(-1) adds a row in the last position of the table2
@@ -522,6 +545,11 @@ function insertData(ind,website){
 // Fetching the position has failed with error code. Show the error reason in 'results' -table.
 function positionError(err)
 {
+
+    // Location was found. Watch may be closed to save battery.
+    navigator.geolocation.clearWatch(id);
+    
+	
 	var msg="";
 	switch(err.code){
 	case err.UNKNOWN_ERROR: //0
