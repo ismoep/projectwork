@@ -31,6 +31,7 @@
  var types;
  var n;
  var dataCollected;
+ var tryBetterAccuracy=0;
  
  
  //--Timeout in millisecondesfor getCurrentPosion, uses GPS by default, set by enableHighAccuracy: true 
@@ -139,7 +140,13 @@ $(document).ready(function()
 function success(position)
 {
 	
-	alert(position.coords.accuracy);
+	if (alert(position.coords.accuracy)>100) {
+		tryBetterAccuracy++;
+		if (tryBetterAccuracy<5){
+			initialize();
+		}
+		
+	}
 	//Location found, clear the 'serach satellite' text
 	if (document.getElementById("results").rows.length>0){	
 		clearTable();		
