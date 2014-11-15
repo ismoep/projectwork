@@ -31,11 +31,12 @@
  var types;
  var n;
  var dataCollected;
- var tryBetterAccuracy=0;
+ var id;
+
  
  
  //--Timeout in millisecondesfor getCurrentPosion, uses GPS by default, set by enableHighAccuracy: true 
- var geoOptions = {maximumAge: 3000, timeout: 60000, enableHighAccuracy: true };
+ var geoOptions = {maximumAge: 0, timeout: 60000, enableHighAccuracy: true };
  
  // An array for google maps markers
  var markersArray = [];
@@ -127,7 +128,7 @@ $(document).ready(function()
 	      // Call getCurrentPosition with success and failure callbacks with timeout
 	     // In a case of ERROR the function positionError is called.
 	       //  navigator.geolocation.getCurrentPosition( success, positionError, geoOptions);
-	         navigator.geolocation.watchPosition( success, positionError, geoOptions);
+	         id=navigator.geolocation.watchPosition( success, positionError, geoOptions);
 		}
 		else
 		{
@@ -154,6 +155,8 @@ function success(position)
 	// Create the map, and place it in the map_canvas div
     map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
     
+    // Location was found. Watch may be close.
+    navigator.geolocation.clearWatch(id);
     
     //This keeps your location in the center when the size of the page is changed.
     window.addEventListener("resize",function() {
