@@ -15,7 +15,7 @@
  *   "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
  *   
  *   REVISION INFORMATION:
- *   	Revision: 	ver 1.1 
+ *   	Revision: 	ver 1.2 
  *   	Date:    	2014-11-25
  *   	Author:   	Ismo Paukamainen
  *   
@@ -393,6 +393,7 @@ function detailsRequest(index, placeid)
     	//Fail counter
     	var i=0;
     	
+    	
          service.getDetails(requestDetails, function(details,status){	
         	 if (status=="OK"){
       	     
@@ -402,7 +403,7 @@ function detailsRequest(index, placeid)
         	 }
         	
         	 else{
-        		 // Re- try max 5 times, if getDetails failed
+        		 // Re- try max 6 times, if getDetails failed
         		 i++;
         		 if (i<6)
         		  {
