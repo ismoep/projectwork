@@ -15,8 +15,8 @@
  *   "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"
  *   
  *   REVISION INFORMATION:
- *   	Revision: 	ver 1.0 
- *   	Date:    	2014-11-16
+ *   	Revision: 	ver 1.1 
+ *   	Date:    	2014-11-25
  *   	Author:   	Ismo Paukamainen
  *   
  *******************************************************************************/
@@ -68,7 +68,7 @@
  
 //--types strings--
  var search_type  = new Array (
-		 "restaurant",
+		 "restaurant",	 
 		 "bar",
 		 "cafe",
 		 "gas_station",
@@ -126,8 +126,11 @@ $(document).ready(function()
 	    	
 	      // http://www.w3.org/TR/2012/PR-geolocation-API-20120510/
 	      // Call getCurrentPosition with success and failure callbacks with timeout
-	     // In a case of ERROR the function positionError is called.
-	       //  navigator.geolocation.getCurrentPosition( success, positionError, geoOptions);
+	     // In a case of ERROR the function positionError is called
+	 	   
+	 	     // watch.position was used  instead of the getCurrentPosition, because there is bigger 
+	 	     //change to get the location from GPS than from the mobile basestation
+	 	     // The only thing when using watch, ist that there is a need to stop watching when not needed anymore.
 	         id=navigator.geolocation.watchPosition( success, positionError, geoOptions);
 		}
 		else
@@ -318,9 +321,13 @@ function placesRequest(title,latlng,types)
 		// The result is returned in JASON format.
 		//--------------------------------------------------------
 		
+		 alert(status);
+	  if  (status== "OK"){
+	  
+		  
 		$.each(results, function(item,place){	
-			 // Ten closest places are marked. i.e. item goes from 0 to 9
 			
+			 // Ten closest places are marked. i.e. item goes from 0 to 9
 			if (item < 10 ){
 				
 			    var thisplace = new google.maps.Marker({
@@ -337,19 +344,27 @@ function placesRequest(title,latlng,types)
 		  	   placeName[item] = place.name;
 		  	   placeVicinity[item]= place.vicinity;
 	  	       placeId[item]= place.place_id;
-			  
+			 
 			    // Web address needs to be added. detailRequest is used for that
 			   detailsRequest(item, place.place_id);
 			
 			}
-			else{
+			else
+			{
 				// exits 'each' -loop when the amount of itemns is 10
 				return false;
 			}
 			
-		})
-		
-		
+		});
+	  }
+	  else
+	  {
+	    // No places found
+		// Give info zero places were found
+	    	var text = document.getElementById("info");
+	    	text.innerHTML="Sorry no places found in the neighborhood.";
+	   }
+	  		
 	});	
 	
 	
@@ -500,13 +515,13 @@ function insertData(ind,website){
 		// Data colleted for all places 
        if (dataCollected==placeList.length){
        
-    	// Give info how many palkces were found
+    	// Give info how many places were found
     	var text = document.getElementById("info");
     	text.innerHTML="Found "+placeList.length+" places.";
     	   
 		  // Put data in the table in order based on the index.
 		  for (i=0;i<placeList.length;i++){
-	        // row(-1) adds a row in the last position of the table2
+	        // row(-1) adds a row in the last position of the table
 	        var row = table.insertRow(-1);
 	    	var cell0 = row.insertCell(0);
 	    	var cell1 = row.insertCell(1);
@@ -519,7 +534,7 @@ function insertData(ind,website){
 				
 			}
 			else{
-				// no web site available, put only place name on th elist
+				// no web site available, put only the name of the place on the list
 				link = placeName[i];
 			};
 			cell1.innerHTML = link;
