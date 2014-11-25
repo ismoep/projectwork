@@ -321,7 +321,7 @@ function placesRequest(title,latlng,types)
 		// The result is returned in JASON format.
 		//--------------------------------------------------------
 		
-		 alert(status);
+		 
 	  if  (status== "OK"){
 	  
 		  
